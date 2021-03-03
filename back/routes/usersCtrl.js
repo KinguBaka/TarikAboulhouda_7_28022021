@@ -2,7 +2,6 @@
 const bcrypt = require('bcrypt');
 const jwtUtils = require('../utils/jwt.utils');
 const models = require('../models');
-const asyncLib = require('async');
 
 // Constants
 const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -120,6 +119,27 @@ module.exports = {
         }).catch(err => {
             res.status(500).json({ 'error' : "impossible de récupérer l'utilisateur: " + err})
         })
+    },
+
+    deleteUserProfile : (req, res) =>{
+        var headerAuth = req.headers['authorization'];
+        var userId = jwtUtils.getUserId(headerAuth);
+
+        if (userId < 0) {
+            return res.status(400).json({ 'error': 'Mauvais token' });
+        }
+
+        models.User.findOne({
+            attributes: ['id'],
+            where: { id: userId }
+        }).then(user => {
+            if (user) {
+                user.destroy();
+                res.status(200).json({ message : " Utilisateur supprimé !"})
+            } else {
+                res.status(404).json({ 'error' : 'Utilisateur introuvable'})
+            }
+        }).catch(err => res.status(400).json({ 'error' : " Impossible de supprimer l'utilisateur "+ err }));
     }
 
     // TODO Modification de profil
