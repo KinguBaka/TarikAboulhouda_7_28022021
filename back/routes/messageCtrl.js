@@ -2,6 +2,7 @@
 const models = require('../models');
 const asyncLib = require('async');
 const jwtUtils = require('../utils/jwt.utils');
+const message = require('../models/message');
 
 // Constants
 const TITLE_LIMIT = 2;
@@ -108,19 +109,20 @@ module.exports = {
         }
 
         var value = { title : title, content : content };
-
+        console.log(req.params.id);
+        console.log(value);
         models.User.findOne({
             where: { id: userId }
         })
         .then(userFound =>{
             if(userFound) {
                 models.Message.update(
-                    {value},
+                    value,
                     {where : {id: req.params.id }}
                 )
                 .then(modifMessage => {
-                    if (modifMessage) {
-                        return res.status(201).json(modifMessage);
+                    if (modifMessage == 1) {
+                        return res.status(201).json({'message' : 'Message modifié '});
                     } else {
                         return res.status(500).json({'error' : 'Impossible de modifier le message'});
                     }
