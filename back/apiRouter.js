@@ -16,6 +16,8 @@ exports.router = ( function() {
     // Messages routes 
     apiRouter.route('/messages/new').post(messageCtrl.createMessage);
     apiRouter.route('/messages/').get(messageCtrl.listMessage);
+    apiRouter.route('/messages/:id').put(messageCtrl.modifMessage);
+    apiRouter.route('/messages/:id').delete(messageCtrl.deleteMessage);
 
     return apiRouter;
 })();
