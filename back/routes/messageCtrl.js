@@ -1,8 +1,6 @@
 // Imports
 const models = require('../models');
-const asyncLib = require('async');
 const jwtUtils = require('../utils/jwt.utils');
-const message = require('../models/message');
 
 // Constants
 const TITLE_LIMIT = 2;
@@ -109,8 +107,7 @@ module.exports = {
         }
 
         var value = { title : title, content : content };
-        console.log(req.params.id);
-        console.log(value);
+
         models.User.findOne({
             where: { id: userId }
         })
@@ -140,22 +137,20 @@ module.exports = {
         // Getting auth header
         var headerAuth = req.headers['authorization'];
         var userId = jwtUtils.getUserId(headerAuth);
-
-        models.User.findOne({
-            where : {id: userId || user.isAdmin === true}
-        })
-        .then(userFound =>{
-            if(userFound) {
-                models.Message.findOne({id : req.params.id })
-                    .then(message => {
-                        message.destroy()
-                        res.status(200).json({ message : " Message supprimé !"});
-                    });
+        var userIsAdmin = jwtUtils.UserIsAdmin(headerAuth);
+        
+        models.Message.findOne({where : {id : req.params.id }})
+        .then(message => {
+            if (userId == message.UserId || userIsAdmin == true ) {
+                    message.destroy()
+                    res.status(200).json({ message : " Message supprimé !"});  
             } else {
-                res.status(404).json({ 'error' : 'Utilisateur introuvable'});
+                res.status(404).json({ 'error' : 'Utilisateur non autorisé'});
             }
-        }).catch(err => { 
-            return res.status(409).json({ 'error' : "Impossible de vérifier l'utilisateur: " + err})
+        })
+        .catch(err => { 
+            return res.status(409).json({ 'error' : "Message introuvable : " + err})
         });
     }
+
 };

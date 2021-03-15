@@ -31,5 +31,18 @@ module.exports = {
             } catch (err) {}
         }
         return userId;
+    },
+
+    UserIsAdmin: authorization => {
+        var userIsAdmin = false;
+        var token = module.exports.parseAuthorization(authorization);
+        if (token != null) {
+            try {
+                var jwtToken = jwt.verify(token, JWT_SIGN_SECRET);
+                if (jwtToken != null)
+                userIsAdmin = jwtToken.isAdmin;
+            } catch (err) {}
+        }
+        return userIsAdmin;
     }
 }
