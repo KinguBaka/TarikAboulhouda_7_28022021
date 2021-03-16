@@ -2,6 +2,7 @@
 const express = require('express');
 const usersCtrl = require('./routes/usersCtrl');
 const messageCtrl = require('./routes/messageCtrl');
+const multer = require('./utils/multer-config');
 
 // Routes
 exports.router = ( function() {
@@ -14,7 +15,7 @@ exports.router = ( function() {
     apiRouter.route('/users/me').delete(usersCtrl.deleteUserProfile);
 
     // Messages routes 
-    apiRouter.route('/messages/new').post(messageCtrl.createMessage);
+    apiRouter.route('/messages/new').post(multer, messageCtrl.createMessage);
     apiRouter.route('/messages/').get(messageCtrl.listMessage);
     apiRouter.route('/messages/:id').put(messageCtrl.modifMessage);
     apiRouter.route('/messages/:id').delete(messageCtrl.deleteMessage);

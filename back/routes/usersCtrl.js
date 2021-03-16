@@ -2,6 +2,7 @@
 const bcrypt = require('bcrypt');
 const jwtUtils = require('../utils/jwt.utils');
 const models = require('../models');
+const { check, validationResult } = require('express-validator');
 
 // Constants
 const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -12,6 +13,17 @@ const PASSWORD_REGEX = /^(?=.*\d).{4,8}$/
 module.exports = {
 
     signup: (req, res) => {
+        /*// Validator
+        check('email').isEmail(),
+        check('password').isLength({min: 5}),
+        check('username').isLength({min: 3}),
+        check('bio').optional()
+        
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }*/
+
         // Params
         var email = req.body.email;
         var username = req.body.username;

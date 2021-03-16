@@ -19,6 +19,7 @@ module.exports = {
         // Params
         var title = req.body.title;
         var content = req.body.content;
+        var attachement = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
 
         if (title == null || content == null ) {
             return res.status(400).json({ 'error' : 'Paramétres manquants'});
@@ -36,6 +37,7 @@ module.exports = {
                 models.Message.create({
                     title : title,
                     content : content,
+                    attachement : attachement,
                     likes : 0,
                     UserId : userFound.id
                 })
