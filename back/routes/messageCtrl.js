@@ -145,7 +145,7 @@ module.exports = {
         
         models.Message.findOne({where : {id : req.params.id }})
         .then(message => {
-            if (userId == message.UserId || userIsAdmin == true ) {
+            if (userId === message.UserId || userIsAdmin === true ) {
                 const filename = sauce.imageUrl.split("/images/")[1];
                 fs.unlink(`images/${filename}`, () => {
                     message.destroy()

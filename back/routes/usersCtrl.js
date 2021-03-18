@@ -44,7 +44,7 @@ module.exports = {
         }
 
         if (!PASSWORD_REGEX.test(password)) {
-            return res.status(400).json({ 'error': 'Mot de passe invalide : Le mot de passe doit comporter entre 4 et 8 chiffres et inclure au moins un chiffre numérique. '});
+            return res.status(400).json({ 'error': 'Mot de passe invalide : Le mot de passe doit comporter entre 4 et 8 lettres et inclure au moins un chiffre numérique. '});
         }
 
         models.User.findOne({
@@ -144,15 +144,60 @@ module.exports = {
         models.User.findOne({
             attributes: ['id'],
             where: { id: userId }
-        }).then(user => {
-            if (user) {
-                user.destroy();
+        }).then(userFound => {
+            if (userFound) {
+                userFound.destroy();
                 res.status(200).json({ message : " Utilisateur supprimé !"})
             } else {
                 res.status(404).json({ 'error' : 'Utilisateur introuvable'})
             }
         }).catch(err => res.status(400).json({ 'error' : " Impossible de supprimer l'utilisateur "+ err }));
-    }
+    },
 
-    // TODO Modification de profil
+    modifUserProfil : (req, res) => {
+        var headerAuth = req.headers['authorization'];
+        var userId = jwtUtils.getUserId(headerAuth);
+
+        // Params
+        var email = req.body.email;
+        var username = req.body.username;
+        var password = req.body.password;
+        var bio = req.body.bio;
+
+        // Verify pseudo length, mail regex, password etc.
+        /*if (username.length >= 13 || username.length <= 4) {
+            return res.status(400).json({ 'error': 'Mauvais username renseigné (doit faire entre 5 - 12 caractéres) '});
+        } else if (!EMAIL_REGEX.test(email)) {
+            return res.status(400).json({ 'error': 'Email renseigné incorrect'});
+        } else if (!PASSWORD_REGEX.test(password)) {
+            return res.status(400).json({ 'error': 'Mot de passe invalide : Le mot de passe doit comporter entre 4 et 8 lettres et inclure au moins un chiffre numérique. '});
+        }*/
+
+        var value = {email : email, username : username, password : password, bio : bio };
+
+        models.User.findOne({
+            where: { id: userId }
+        })
+        .then(userFound => {
+            if(userFound) {
+                models.User.update(
+                    value,
+                    {where : {id : userFound.id}}
+                )
+                .then(userModif => {
+                    console.log(userModif);
+                    if (userModif == 1) {
+                        return res.status(201).json({'message' : 'Utilisateur modifié '});
+                    } else {
+                        return res.status(500).json({'error' : "Impossible de modifier l'utilisateur"});
+                    }
+                })
+            } else {
+                res.status(404).json({ 'error' : 'Utilisateur introuvable'});
+            }
+        })
+        .catch(err => {
+            return res.status(409).json({ 'error' : "Impossible de vérifier l'utilisateur: " + err})
+        });
+    }
 };
