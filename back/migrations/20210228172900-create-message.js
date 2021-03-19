@@ -33,6 +33,11 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER
       },
+      usersLiked: {
+        allowNull: false,
+        type: Sequelize.ARRAY(Sequelize.STRING),
+        defaultValue : []
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

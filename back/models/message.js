@@ -14,14 +14,15 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: {allowNull: false},
         onDelete: 'CASCADE'
       }),
-      model.Message.hasMany(models.Comment)
+      models.Message.hasMany(models.Comment)
     }
   };
   Message.init({
     title: DataTypes.STRING,
     content: DataTypes.STRING,
     attachement: DataTypes.STRING,
-    likes: DataTypes.INTEGER
+    likes: DataTypes.INTEGER,
+    usersLiked : DataTypes.ARRAY(DataTypes.STRING)
   }, 
   {
     sequelize,

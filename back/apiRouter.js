@@ -20,6 +20,9 @@ exports.router = ( function() {
     apiRouter.route('/messages/').get(messageCtrl.listMessage);
     apiRouter.route('/messages/:id').put(messageCtrl.modifMessage);
     apiRouter.route('/messages/:id').delete(messageCtrl.deleteMessage);
+    apiRouter.route('/messages/:id/like').post(messageCtrl.likeMessage);
+
+    // Comments routes
 
     return apiRouter;
 })();

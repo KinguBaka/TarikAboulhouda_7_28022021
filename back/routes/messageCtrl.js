@@ -158,6 +158,25 @@ module.exports = {
         .catch(err => { 
             return res.status(409).json({ 'error' : "Message introuvable : " + err})
         });
+    },
+
+    likeMessage: (req, res) => {
+        // Getting auth header
+        var headerAuth = req.headers['authorization'];
+        var userId = jwtUtils.getUserId(headerAuth);
+
+        models.User.findOne({
+            where: { id: userId }
+        })
+        .then(userFound =>{
+            models.Message.findOne({ where : {id : req.params.id }})
+            .then(message => {
+                
+            })
+        })
+        .catch(err => {
+            return res.status(409).json({ 'error' : "Impossible de vérifier l'utilisateur: " + err})
+        });
     }
 
 };
