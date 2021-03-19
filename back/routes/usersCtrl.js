@@ -6,7 +6,7 @@ const { check, validationResult } = require('express-validator');
 
 // Constants
 const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-const PASSWORD_REGEX = /^(?=.*\d).{4,8}$/
+const PASSWORD_REGEX = /^(?=.*\d).{4,12}$/
 
 
 // Routes
@@ -165,32 +165,45 @@ module.exports = {
         var bio = req.body.bio;
 
         // Verify pseudo length, mail regex, password etc.
-        /*if (username.length >= 13 || username.length <= 4) {
-            return res.status(400).json({ 'error': 'Mauvais username renseigné (doit faire entre 5 - 12 caractéres) '});
-        } else if (!EMAIL_REGEX.test(email)) {
-            return res.status(400).json({ 'error': 'Email renseigné incorrect'});
-        } else if (!PASSWORD_REGEX.test(password)) {
-            return res.status(400).json({ 'error': 'Mot de passe invalide : Le mot de passe doit comporter entre 4 et 8 lettres et inclure au moins un chiffre numérique. '});
-        }*/
+        if (username) {
+            if (username.length >= 13 || username.length <= 4) {
+                return res.status(400).json({ 'error': 'Mauvais username renseigné (doit faire entre 5 - 12 caractéres) '});
+            }
+        }
 
-        var value = {email : email, username : username, password : password, bio : bio };
+        if (email) {
+            if (!EMAIL_REGEX.test(email)) {
+                return res.status(400).json({ 'error': 'Email renseigné incorrect'});
+            } 
+        }
+            
+        if (password) {
+            if (!PASSWORD_REGEX.test(password)) {
+                return res.status(400).json({ 'error': 'Mot de passe invalide : Le mot de passe doit comporter entre 4 et 8 lettres et inclure au moins un chiffre numérique. '});
+            }
+        }
+
+        var value = {email : email, username : username, password : password, bio : bio }
 
         models.User.findOne({
             where: { id: userId }
         })
         .then(userFound => {
             if(userFound) {
-                models.User.update(
-                    value,
-                    {where : {id : userFound.id}}
-                )
-                .then(userModif => {
-                    console.log(userModif);
-                    if (userModif == 1) {
-                        return res.status(201).json({'message' : 'Utilisateur modifié '});
-                    } else {
-                        return res.status(500).json({'error' : "Impossible de modifier l'utilisateur"});
-                    }
+                bcrypt.hash(password, 5, function(err, bcryptedPassword){
+                    value.password = bcryptedPassword;
+                    models.User.update(
+                        value,
+                        {where : {id : userFound.id}}
+                    )
+                    .then(userModif => {
+                        console.log(userModif);
+                        if (userModif == 1) {
+                            return res.status(201).json({'message' : 'Utilisateur modifié '});
+                        } else {
+                            return res.status(500).json({'error' : "Impossible de modifier l'utilisateur"});
+                        }
+                    })
                 })
             } else {
                 res.status(404).json({ 'error' : 'Utilisateur introuvable'});
