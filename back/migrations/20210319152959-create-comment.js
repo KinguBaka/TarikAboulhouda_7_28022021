@@ -8,16 +8,30 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      idUSERS: {
-        type: Sequelize.INTEGER
+      userId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references : {
+          model: 'Users',
+          key: 'id'
+        }
       },
-      idMESSAGES: {
-        type: Sequelize.INTEGER
+      messageId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references : {
+          model: 'Messages',
+          key: 'id'
+        }
       },
       content: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       likes: {
+        allowNull: false,
         type: Sequelize.INTEGER
       },
       createdAt: {
