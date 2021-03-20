@@ -2,6 +2,7 @@
 const express = require('express');
 const usersCtrl = require('./routes/usersCtrl');
 const messageCtrl = require('./routes/messageCtrl');
+const commentCtrl = require('./routes/commentCtrl');
 const multer = require('./utils/multer-config');
 
 // Routes
@@ -23,6 +24,7 @@ exports.router = ( function() {
     apiRouter.route('/messages/:id/like').post(messageCtrl.likeMessage);
 
     // Comments routes
+    apiRouter.route('/messages/:id/comment').post(commentCtrl.createComment);
 
     return apiRouter;
 })();

@@ -167,15 +167,35 @@ module.exports = {
         // Getting auth header
         var headerAuth = req.headers['authorization'];
         var userId = jwtUtils.getUserId(headerAuth);
+        var likeStatus = req.body.like;
 
         models.User.findOne({
             where: { id: userId }
         })
         .then(userFound =>{
-            models.Message.findOne({ where : {id : req.params.id }})
-            .then(message => {
-
-            })
+            if (userFound) {
+                models.Message.findOne({ where : {id : req.params.id }})
+                .then(message => {
+                    if (likeStatus === 1) {
+                        models.Message.updateOne({ where : { id: req.params.id }},
+                            {$push: {usersLiked : userId}, $inc: {likes: +1 }})
+                        .then(() => res.status(200).json( {message: "Vous avez like ce message !" }))
+                        .catch(err => res.status(400).json({ err }));
+                    }
+                    if (likeStatus === 0) {
+                        const index = message.usersLiked.indexOf(userId);
+                        if (index > -1) {
+                            message.usersLiked.slice(index, 1);
+                            models.Message.updateOne({where : { id: req.params.id }},
+                                {$push: { usersLiked: {$each: [ ], $slice: index} }, $inc: { likes: -1 }})
+                            .then(() => res.status(200).json({ message: "Like annulé !" }))
+                            .catch((err) => res.status(400).json({ err }))
+                        }
+                    }
+                })
+            } else {
+                res.status(404).json({ 'error' : 'Utilisateur introuvable'});
+            }
         })
         .catch(err => {
             return res.status(409).json({ 'error' : "Impossible de vérifier l'utilisateur: " + err})
