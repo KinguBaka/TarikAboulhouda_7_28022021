@@ -20,7 +20,9 @@ module.exports = {
         // Params
         var title = req.body.title;
         var content = req.body.content;
-        var attachement = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
+        if (req.body.attachement) {
+            var attachement = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
+        }
 
         if (title == null || content == null ) {
             return res.status(400).json({ 'error' : 'Paramétres manquants'});
@@ -40,6 +42,7 @@ module.exports = {
                     content : content,
                     attachement : attachement,
                     likes : 0,
+                    usersLiked : [],
                     UserId : userFound.id
                 })
                 .then(newMessage => {
@@ -171,7 +174,7 @@ module.exports = {
         .then(userFound =>{
             models.Message.findOne({ where : {id : req.params.id }})
             .then(message => {
-                
+
             })
         })
         .catch(err => {
