@@ -197,7 +197,6 @@ module.exports = {
                         {where : {id : userFound.id}}
                     )
                     .then(userModif => {
-                        console.log(userModif);
                         if (userModif == 1) {
                             return res.status(201).json({'message' : 'Utilisateur modifié '});
                         } else {

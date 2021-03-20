@@ -6,7 +6,7 @@ const jwtUtils = require('../utils/jwt.utils');
 
 module.exports = {
 
-    createComment = {
+    createComment: (req, res) => {
         
     }
 }

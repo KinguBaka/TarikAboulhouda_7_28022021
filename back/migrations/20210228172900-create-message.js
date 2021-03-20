@@ -35,8 +35,8 @@ module.exports = {
       },
       usersLiked: {
         allowNull: false,
-        type: Sequelize.ARRAY(Sequelize.STRING),
-        defaultValue : []
+        type: Sequelize.JSON,
+        defaultValue: []
       },
       createdAt: {
         allowNull: false,
