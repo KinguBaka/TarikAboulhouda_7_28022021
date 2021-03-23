@@ -21,7 +21,7 @@ exports.router = ( function() {
     apiRouter.route('/messages/').get(messageCtrl.listMessage);
     apiRouter.route('/messages/:id').put(messageCtrl.modifMessage);
     apiRouter.route('/messages/:id').delete(messageCtrl.deleteMessage);
-    apiRouter.route('/messages/:id/like').post(messageCtrl.likeMessage);
+    apiRouter.route('/messages/:id/like').put(messageCtrl.likeMessage);
 
     // Comments routes
     apiRouter.route('/messages/:id/comment').post(commentCtrl.createComment);

@@ -2,6 +2,7 @@
 const models = require('../models');
 const jwtUtils = require('../utils/jwt.utils');
 const fs = require('fs');
+const { each } = require('async');
 
 // Constants
 const TITLE_LIMIT = 2;
@@ -205,20 +206,20 @@ module.exports = {
                             { where : { id: req.params.id }}
                         )
                         .then(() => res.status(200).json( { message: "Vous avez like ce message !" }))
-                        .catch(err => res.status(400).json({ 'error' : "Vous n'avez pas pu liker ce message " + err }));
+                        .catch(err => res.status(400).json({ 'error' : "Vous n'avez pas pu liker ce message : " + err }));
                     }
                     if (likeStatus == 0) {
                         var likes = message.likes - 1;
-                        var usersLiked = Array.from(message.usersLiked);
-                        const index = usersLiked.indexOf(userId);
-                        usersLiked.slice(index, 1);
-                        var value = { likes: likes, usersLiked: usersLiked};
+                        var usersLiked = Object.values(message.usersLiked);
+                        var index = usersLiked.indexOf(userId);
+                        usersLiked.splice(index, 1);
+                        var value = { likes: likes, usersLiked: usersLiked };
                         models.Message.update(
                             value,
                             { where : { id: req.params.id }}
                         )
                         .then(() => res.status(200).json({ message: "Like annulé !" }))
-                        .catch((err) => res.status(400).json({ 'error' : "Vous n'avez pas pu annuler votre like "+ err }))
+                        .catch((err) => res.status(400).json({ 'error' : "Vous n'avez pas pu annuler votre like : "+ err }))
                     }
                 })
             } else {
@@ -228,7 +229,7 @@ module.exports = {
         })
         .catch(err => {
             console.log("7");
-            return res.status(409).json({ 'error' : "Impossible de vérifier l'utilisateur: " + err})
+            return res.status(409).json({ 'error' : "Impossible de vérifier l'utilisateur : " + err})
         });
     }
 
