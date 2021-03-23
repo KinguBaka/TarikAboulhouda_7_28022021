@@ -24,7 +24,10 @@ exports.router = ( function() {
     apiRouter.route('/messages/:id/like').put(messageCtrl.likeMessage);
 
     // Comments routes
-    apiRouter.route('/messages/:id/comment').post(commentCtrl.createComment);
+    apiRouter.route('/messages/:idMessage/comment/new').post(commentCtrl.createComment);
+    apiRouter.route('/messages/:idMessage/comment/').get(commentCtrl.listComment);
+    apiRouter.route('/messages/:idMessage/comment/:idComment').put(commentCtrl.modifComment);
+    apiRouter.route('/messages/:idMessage/comment/:idComment').delete(commentCtrl.deleteComment);
 
     return apiRouter;
 })();

@@ -133,7 +133,7 @@ module.exports = {
             if(userFound) {
                 models.Message.update(
                     value,
-                    {where : {id: req.params.id }}
+                    {where : {id: req.params.id , UserId: userFound.id}}
                 )
                 .then(modifMessage => {
                     if (modifMessage == 1) {
@@ -141,7 +141,7 @@ module.exports = {
                     } else {
                         return res.status(500).json({'error' : 'Impossible de modifier le message'});
                     }
-                });
+                })
             } else {
                 res.status(404).json({ 'error' : 'Utilisateur introuvable'});
             }
