@@ -1,11 +1,20 @@
 <template>
-  <h1>Home</h1>
+  <div>
+    <h1>Hello</h1>
+    <h3 v-if="user"> Bonjour {{user.username}}</h3>
+    <h3 v-if="!user">Vous n'êtes pas connecté !</h3>
+  </div>
 </template>
 
 <script>
-export default {
-  name: 'Home',
-}
+  import {mapGetters} from 'vuex'
+
+  export default {
+    name: 'Home',
+    computed: {
+      ...mapGetters(['user'])
+    }
+  }
 </script>
 
 <style>

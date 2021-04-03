@@ -7,28 +7,32 @@
             <label>Password</label>
             <input required v-model="password" type="password" placeholder="Password"/>
             <hr />
-            <button type="submit">Login</button>
+            <button type="submit">Se connecter</button>
         </form>
     </div>
 </template>
 
 <script>
-    import { AUTH_REQUEST } from './Auth/auth';
+    import axios from 'axios';
 
     export default {
-        name: 'login',
+        name: 'Login',
         data(){
             return {
                 email: '',
                 password: ''
             }
         },
-        method : {
-            login(){
-                const { email, password } = this;
-                this.$store.dispatch(AUTH_REQUEST, { email, password }).then(() => {
-                    this.$router.push('/')
+        methods : {
+            async login() {
+                const response = await axios.post('/users/login', {
+                    email: this.email,
+                    password: this.password
                 });
+
+                localStorage.setItem('token', response.data.token);
+                this.$store.dispatch('user', response.data.user);
+                this.$router.push('/');
             }
         }
     };

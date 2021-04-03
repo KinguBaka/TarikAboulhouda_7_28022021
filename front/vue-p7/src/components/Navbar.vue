@@ -1,21 +1,21 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand"  href="/">
+      <router-link class="navbar-brand"  to="/">
         <img src="../assets/icon-left-font-monochrome-black.svg" id="icone" alt="">
-      </a>
+      </router-link>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse ml-auto" id="navbarNavAltMarkup">
-        <div v-if="isAuthenticated" class="navbar-nav">
-            <a class="nav-link active" aria-current="page" href="#">Acceuil</a>
-            <a class="nav-link" href="#">Mon profil</a>
-            <Logout />
+        <div v-if="user" class="navbar-nav">
+          <a class="nav-link active" aria-current="page" href="#">Acceuil</a>
+          <a class="nav-link" href="#">Mon profil</a>
+          <a class="nav-link" @click.prevent="logout">Deconnexion</a>
         </div>
-        <div v-if="!isAuthenticated && !authLoading" class="navbar-nav">
-          <a class="nav-link active" aria-current="page" href="/login">Se connecter</a>
-          <a class="nav-link" href="/signup">S'inscrire</a>
+        <div v-if="!user" class="navbar-nav">
+          <router-link class="nav-link active" aria-current="page" to="/login">Se connecter</router-link>
+          <router-link class="nav-link" to="/signup">S'inscrire</router-link>
         </div>
       </div>
     </div>
@@ -23,13 +23,28 @@
 </template>
 
 <script>
-  
-  import Logout from './Logout';
+  import {mapGetters} from 'vuex';
 
   export default {
     name: 'Navbar',
-    components:  {
-      Logout,
+    methods: {
+      logout() {
+        localStorage.removeItem('token');
+        this.$store.dispatch('user', null);
+        this.$router.push('/').catch(err => {
+          // Ignore the vuex err regarding  navigating to the page they are already on.
+          if (
+            err.name !== 'NavigationDuplicated' &&
+            !err.message.includes('Avoided redundant navigation to current location')
+          ) {
+            // But print any other errors to the console
+            console.log(err);
+          }
+        });
+      }
+    },
+    computed: {
+      ...mapGetters(['user'])
     }
   
   }
