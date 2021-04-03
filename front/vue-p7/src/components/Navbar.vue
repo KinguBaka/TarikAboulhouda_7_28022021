@@ -9,9 +9,9 @@
       </button>
       <div class="collapse navbar-collapse ml-auto" id="navbarNavAltMarkup">
         <div v-if="user" class="navbar-nav">
-          <a class="nav-link active" aria-current="page" href="#">Acceuil</a>
-          <a class="nav-link" href="#">Mon profil</a>
-          <a class="nav-link" @click.prevent="logout">Deconnexion</a>
+          <router-link class="nav-link active" aria-current="page" to="/">Acceuil</router-link>
+          <router-link class="nav-link active" to="/myprofil">Mon profil</router-link>
+          <a class="nav-link" @click.prevent="logout" href="">Deconnexion</a>
         </div>
         <div v-if="!user" class="navbar-nav">
           <router-link class="nav-link active" aria-current="page" to="/login">Se connecter</router-link>
