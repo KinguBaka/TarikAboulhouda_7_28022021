@@ -11,12 +11,12 @@ server.use(bodyParser.urlencoded({ extended: true }));
 server.use(bodyParser.json());
 
 // Configure routes
-server.use((req, res, next) => {
+/*server.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
 
     // authorized headers for preflight requests
     // https://developer.mozilla.org/en-US/docs/Glossary/preflight_request
-    res.header('Access-Control-Allow-Headers', '*');
+    res.header('Access-Control-Allow-Headers', "*");
     next();
 
     server.options('*', (req, res) => {
@@ -24,6 +24,19 @@ server.use((req, res, next) => {
         res.header('Access-Control-Allow-Methods', '*');
         res.send();
     });
+    
+});*/
+
+server.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+    // allow preflight
+    if (req.method === 'OPTIONS') {
+        res.send(200);
+    } else {
+        next();
+    }
 });
 
 server.get('/', function (req, res) {
