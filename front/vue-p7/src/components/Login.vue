@@ -28,11 +28,11 @@
                 const response = await axios.post('/users/login', {
                     email: this.email,
                     password: this.password
-                });
-
+                })
                 localStorage.setItem('token', response.data.token);
                 this.$store.dispatch('user', response.data.user);
                 this.$router.push('/');
+                window.location.reload();
             }
         }
     };

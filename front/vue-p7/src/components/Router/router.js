@@ -32,7 +32,7 @@ export default new Router({
         {path: '/', component: Home},
         {path: '/login', component: Login},
         {path: '/signup', component: Signup},
-        {path: '/myprofil', beforeEnter: guardMyroute, component: MyProfil},
+        {path: '/myprofil', beforeEnter : guardMyroute, component: MyProfil},
         {path: '/updateprofil', beforeEnter: guardMyroute, component: UpdateProfil}
     ]
 })
