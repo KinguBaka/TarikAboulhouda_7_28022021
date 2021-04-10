@@ -1,21 +1,5 @@
 <template>
 
-    <!--<form class="update" @submit.prevent="updateProfil" >
-        <h2> Changement de paramétres </h2>
-        <br>
-        <label>Email : {{user.email}} </label> <br>
-        <input v-model="email" type="text" placeholder="email@email.com" autocomplete="off"/> <br> <br>
-        <label>Password : {{user.password}} </label> <br>
-        <input v-model="password" type="password" placeholder="Password"/> <br> <br>
-        <label>Username : {{user.username}} </label> <br>
-        <input v-model="username" type="text" placeholder="toto" /> <br> <br>
-        <label for="bio">Bio : {{user.bio}} </label> <br>
-        <input v-model="bio" type="text" placeholder="Présentez-vous"/> <br> <br>
-        <br>
-        <br>
-        <button class="btn btn-primary" type="submit">Modifier</button>
-    </form>-->
-
     <div>
         <ul class="list-group">
             <li class="list-group-item">
@@ -73,6 +57,7 @@
             </li>
         </ul>
 
+        <button type="button" class="btn btn-danger" @click.prevent="deleteProfil">Supprimer son profil</button>
 
     </div>
 
@@ -96,6 +81,22 @@
             ...mapGetters(['user'])
         },
         methods: {
+            
+            async deleteProfil(){
+                await axios.delete('/users/me')
+                localStorage.removeItem('token');
+                this.$store.dispatch('user', null);
+                this.$router.push('/').catch(err => {
+                // Ignore the vuex err regarding  navigating to the page they are already on.
+                if (
+                    err.name !== 'NavigationDuplicated' &&
+                    !err.message.includes('Avoided redundant navigation to current location')
+                ) {
+                    // But print any other errors to the console
+                    console.log(err);
+                }
+                });
+            },
             async updateProfil() {
                 
                     let email= !this.email ? null: this.email
@@ -168,7 +169,6 @@
                     bio2.style.display = "none";
                 }
             }
-            
         }
     }
 </script>
