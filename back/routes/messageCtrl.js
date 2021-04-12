@@ -3,6 +3,7 @@ const models = require('../models');
 const jwtUtils = require('../utils/jwt.utils');
 const fs = require('fs');
 const { each } = require('async');
+const { stringify } = require('querystring');
 
 // Constants
 const TITLE_LIMIT = 2;
@@ -22,7 +23,7 @@ module.exports = {
         var title = req.body.title;
         var content = req.body.content;
         if (req.body.attachement) {
-            var attachement = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
+            var attachement = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
         }
 
         if (title == null || content == null ) {

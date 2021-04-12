@@ -13,7 +13,9 @@
             <div v-for="message of messages" :key="message.id" class="card">
                 <h3> {{message.title}} </h3>
                 <p> {{message.content}} </p>
+                <img v-if="message.attachement" :src="message.attachement"/>
                 <p> {{format_date(message.createdAt)}} </p>
+                <button v-if="message.UserId === user.id" class="delete btn btn-danger" @click.prevent="deleteMessage(message.id)">Supprimer</button>
             </div>
         </div>
     </div>
@@ -44,14 +46,18 @@
             },
             format_date,
             async createMessage() {
-            await axios.post('/messages/new',
-            {
-                title: this.title,
-                content: this.content,
-                attachement: this.attachement
-            });
-            window.location.reload();
-        }
+                await axios.post('/messages/new',
+                {
+                    title: this.title,
+                    content: this.content,
+                    attachement: this.attachement
+                });
+                window.location.reload();
+            },
+            async deleteMessage(id) {
+                await axios.delete('/messages/'+ id)
+                window.location.reload();
+            }
         },
         mounted: function() {
             this.listMessage();
@@ -67,5 +73,8 @@
     }
     textarea {
         width: 50%;
+    }
+    .delete {
+        width: 100px;
     }
 </style>
