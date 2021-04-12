@@ -4,7 +4,12 @@
             <h1>Hello</h1>
             <h3>Vous n'êtes pas connecté !</h3>
         </div>
-        <div v-if="user" id="messages"> 
+        <div v-if="user" id="messages">
+            <div>
+                <input require v-model="title" placeholder="Votre titre !"/>
+                <textarea require v-model="content" class="form-control" placeholder="Que voulez-vous dire?"></textarea>
+                <button @click.prevent="createMessage" class="btn btn-primary">Publier</button>
+            </div>
             <div v-for="message of messages" :key="message.id" class="card">
                 <h3> {{message.title}} </h3>
                 <p> {{message.content}} </p>
@@ -21,6 +26,13 @@
 
     export default {
         name: 'Home',
+        data() {
+            return {
+                title:'',
+                content:'',
+                attachement: null
+            }
+        },
         computed: {
             ...mapGetters(['user']),
             ...mapGetters(['messages'])
@@ -30,7 +42,16 @@
                 const response = await axios.get('/messages/')
                 this.$store.dispatch('messages', response.data)
             },
-            format_date
+            format_date,
+            async createMessage() {
+            await axios.post('/messages/new',
+            {
+                title: this.title,
+                content: this.content,
+                attachement: this.attachement
+            });
+            window.location.reload();
+        }
         },
         mounted: function() {
             this.listMessage();
@@ -43,5 +64,8 @@
     h1 {
         font-size: 100px;
         text-align: center;
+    }
+    textarea {
+        width: 50%;
     }
 </style>
