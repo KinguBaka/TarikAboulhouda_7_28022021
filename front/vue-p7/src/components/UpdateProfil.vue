@@ -99,10 +99,10 @@
             },
             async updateProfil() {
                 
-                    let email= !this.email ? null: this.email
-                    let username= !this.username ? null: this.username
-                    let password= !this.password ? null: this.password
-                    let bio= this.bio
+                    let email = !this.email ? null: this.email
+                    let username = !this.username ? null: this.username
+                    let password = !this.password ? null: this.password
+                    let bio = this.bio
                     let body = {}
                     const data = {
                         email,
