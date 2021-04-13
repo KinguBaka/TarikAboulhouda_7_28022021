@@ -15,7 +15,10 @@
                 <div :id="message.id + 'n1'">
                     <h3> {{message.title}} </h3>
                     <p> {{message.content}} </p>
-                    <img v-if="message.attachement" :src="message.attachement"/>
+                    <img v-if="message.attachement" :src="message.attachement"/> <br>
+                    <span class="badge rounded-pill bg-primary">{{message.likes}} likes</span>
+                    <button v-if="user.id in message.usersLiked">test</button>
+                    <button v-else>{{message.usersLiked}}</button>
                     <p> {{format_date(message.createdAt)}} </p>
                     <button v-if="message.UserId === user.id" class="btn btn-danger" @click.prevent="deleteMessage(message.id)">Supprimer</button>
                     <button v-if="message.UserId === user.id" class="btn btn-primary" @click.prevent="modifMessage(message.id)">Modifier</button>

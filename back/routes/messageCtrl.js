@@ -22,7 +22,7 @@ module.exports = {
         // Params
         var title = req.body.title;
         var content = req.body.content;
-        if (req.body.attachement) {
+        if (req.file) {
             var attachement = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
         }
 
@@ -42,7 +42,7 @@ module.exports = {
                 models.Message.create({
                     title : title,
                     content : content,
-                    attachement : attachement,
+                    attachement,
                     likes : 0,
                     usersLiked : [],
                     UserId : userFound.id
@@ -163,7 +163,7 @@ module.exports = {
             if (userId === message.UserId || userIsAdmin === true ) {
                 if (message.attachement) {
                     const filename = message.attachement.split("/images/")[1];
-                    fs.unlink(`images/${filename}`, () => {
+                    fs.unlink(`public/images/${filename}`, () => {
                         message.destroy()
                         res.status(200).json({ message : " Message supprimé et attachement supprimé !"}); 
                     })

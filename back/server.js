@@ -10,6 +10,8 @@ const server = express();
 server.use(bodyParser.urlencoded({ extended: true }));
 server.use(bodyParser.json());
 
+server.use(express.static('public'));
+
 // Configure routes
 
 server.use(function(req, res, next) {
