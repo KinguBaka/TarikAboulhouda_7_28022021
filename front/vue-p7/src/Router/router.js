@@ -1,11 +1,11 @@
 
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '../Home.vue'
-import Login from '../Login.vue'
-import Signup from '../Signup.vue'
-import MyProfil from '../Profil.vue'
-import UpdateProfil from '../UpdateProfil.vue'
+import Home from '../components/Home/Home.vue'
+import Login from '../components/Login.vue'
+import Signup from '../components/Signup.vue'
+import MyProfil from '../components/Profil.vue'
+import UpdateProfil from '../components/UpdateProfil.vue'
 
 Vue.use(Router);
 
