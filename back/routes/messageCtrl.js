@@ -4,6 +4,7 @@ const jwtUtils = require('../utils/jwt.utils');
 const fs = require('fs');
 const { each } = require('async');
 const { stringify } = require('querystring');
+const { nextTick } = require('process');
 
 // Constants
 const TITLE_LIMIT = 2;
@@ -130,8 +131,15 @@ module.exports = {
         })
         .then(userFound =>{
             if(userFound) {
-                console.log(req.body)
-                console.log(req.file)
+                models.Message.findOne({where : {id : req.params.id }})
+                .then(message =>{
+                    if (message.attachement) {
+                        const filename = message.attachement.split("/images/")[1];
+                        fs.unlink(`public/images/${filename}`, () =>
+                            console.log("Image supprimée")
+                        )
+                    }
+                })
                 models.Message.update({
                     title:title,
                     content: content,
