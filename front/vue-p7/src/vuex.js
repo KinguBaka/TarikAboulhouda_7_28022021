@@ -17,6 +17,9 @@ const store = new Vuex.Store({
         },
         messages: (state) => {
             return state.messages
+        },
+        comments: (state) => {
+            return state.comments
         }
     },
     actions: {
@@ -24,6 +27,9 @@ const store = new Vuex.Store({
             context.commit('user', user);
         },
         messages(context, messages) {
+            context.commit('messages', messages);
+        },
+        comments(context, messages) {
             context.commit('messages', messages);
         }
     },
@@ -33,6 +39,9 @@ const store = new Vuex.Store({
         },
         messages(state, messages) {
             state.messages = messages;
+        },
+        comments(state, comments) {
+            state.comments = comments;
         }
     }
 });

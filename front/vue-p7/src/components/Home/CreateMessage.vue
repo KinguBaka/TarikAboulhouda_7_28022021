@@ -16,7 +16,7 @@
             return {
                 title:'',
                 content:'',
-                file: ''
+                attachement: ''
             }
         },
         methods : {
@@ -24,13 +24,13 @@
                 let body = new FormData();
                 body.append('title', this.title);
                 body.append('content', this.content);
-                body.append('attachement', this.file)
+                body.append('attachement', this.attachement)
 
                 await axios.post('/messages/new', body);
                 window.location.reload();
             },
             handleFileUpload() {
-                this.file = this.$refs.file.files[0];
+                this.attachement = this.$refs.file.files[0];
             }
         }
     }

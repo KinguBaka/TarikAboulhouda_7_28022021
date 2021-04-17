@@ -117,26 +117,30 @@ module.exports = {
             }
         }
 
-        if (req.body.attachement) {
-            var attachement = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
-        };
+        if (req.file) {
+            var attachement = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
+        }
 
         if (title === null && content === null && attachement === null) {
             return res.status(400).json({ 'error' : 'Paramétres manquants'});
-        };
-
-        var value = { title : title, content : content, attachement : attachement };
+        }
 
         models.User.findOne({
             where: { id: userId }
         })
         .then(userFound =>{
             if(userFound) {
-                models.Message.update(
-                    value,
+                console.log(req.body)
+                console.log(req.file)
+                models.Message.update({
+                    title:title,
+                    content: content,
+                    attachement: attachement
+                    },
                     {where : {id: req.params.id , UserId: userFound.id}}
                 )
                 .then(modifMessage => {
+                    console.log(modifMessage)
                     if (modifMessage == 1) {
                         return res.status(201).json({'message' : 'Message modifié '});
                     } else {
@@ -224,12 +228,10 @@ module.exports = {
                     }
                 })
             } else {
-                console.log("6");
                 res.status(404).json({ 'error' : 'Utilisateur introuvable'});
             }
         })
         .catch(err => {
-            console.log("7");
             return res.status(409).json({ 'error' : "Impossible de vérifier l'utilisateur : " + err})
         });
     }
