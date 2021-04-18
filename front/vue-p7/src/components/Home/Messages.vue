@@ -13,7 +13,7 @@
                 <button v-if="message.UserId === user.id" class="btn btn-danger" @click.prevent="deleteMessage(message.id)">Supprimer</button>
                 <button v-if="message.UserId === user.id" class="btn btn-primary" @click.prevent="modifMessage(message.id)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBackdrop" aria-controls="offcanvasWithBackdrop">Modifier</button>
             </div>
-            <Comments :idMessage="message.id" />
+            <Comments :idMessage="message.id" :idUser="user.id" />
         </div>
         <ModifMessage :messageId="this.modifMessageId" />
     </div>

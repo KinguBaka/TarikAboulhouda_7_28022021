@@ -5,6 +5,8 @@
                 <h3> {{comment.User.username}} </h3>
                 <p> {{comment.content}} </p>
                 <p> {{format_date(comment.createdAt)}} </p>
+                <button v-if="comment.UserId === idUser" class="btn btn-danger" @click.prevent="deleteComment(idMessage, comment.id)">Supprimer</button>
+                <button v-if="comment.UserId === idUser" class="btn btn-primary" @click.prevent="modifMessage(message.id)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBackdrop" aria-controls="offcanvasWithBackdrop">Modifier</button>
             </div>
         </div>
         <CreateComment :idMessage = idMessage />
@@ -21,6 +23,7 @@
         name: 'Comments',
         props:{
             idMessage: Number,
+            idUser: Number
         },
         computed : {
             ...mapGetters(['comments'])
@@ -30,6 +33,10 @@
             async listComment() {
                 const response = await axios.get('/comment/')
                 this.$store.dispatch('comments', response.data)
+            },
+            async deleteComment(idMessage, idComment) {
+                await axios.delete(`/messages/${idMessage}/comment/${idComment}`)
+                window.location.reload();
             }
         },
         mounted : function() {
