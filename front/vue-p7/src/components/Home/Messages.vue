@@ -2,7 +2,8 @@
     <div v-if="user" id="messages">
         <CreateMessage />
         <div v-for="message of messages" :key="message.id" class="card">
-            <div :id="message.id + 'n1'">
+            <div :id="message.id">
+                <h2> {{message.User.username}} </h2>
                 <h3> {{message.title}} </h3>
                 <p> {{message.content}} </p>
                 <img v-if="message.attachement" :src="message.attachement"/> <br>
@@ -12,6 +13,7 @@
                 <button v-if="message.UserId === user.id" class="btn btn-danger" @click.prevent="deleteMessage(message.id)">Supprimer</button>
                 <button v-if="message.UserId === user.id" class="btn btn-primary" @click.prevent="modifMessage(message.id)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBackdrop" aria-controls="offcanvasWithBackdrop">Modifier</button>
             </div>
+            <Comments :idMessage="message.id" />
         </div>
         <ModifMessage :messageId="this.modifMessageId" />
     </div>
@@ -24,6 +26,7 @@
     import CreateMessage from './CreateMessage'
     import LikeMessage from './LikeMessage'
     import ModifMessage from './ModifMessage'
+    import Comments from './Comments'
 
     export default {
         name: 'Messages',
@@ -34,7 +37,8 @@
         },
         computed: {
             ...mapGetters(['user']),
-            ...mapGetters(['messages'])
+            ...mapGetters(['messages']),
+            ...mapGetters(['comments'])
         },
         methods : {
             async listMessage() {
@@ -51,12 +55,13 @@
             }
         },
         mounted : function() {
-            this.listMessage();
+            this.listMessage()
         },
         components : {
             CreateMessage,
             LikeMessage,
-            ModifMessage
+            ModifMessage,
+            Comments
         }
     }
 </script>

@@ -6,7 +6,8 @@ Vue.use(Vuex);
 
 const state = {
     user : null,
-    messages : null
+    messages : null,
+    comments : null
 };
 
 const store = new Vuex.Store({
@@ -29,8 +30,8 @@ const store = new Vuex.Store({
         messages(context, messages) {
             context.commit('messages', messages);
         },
-        comments(context, messages) {
-            context.commit('messages', messages);
+        comments(context, comments) {
+            context.commit('comments', comments);
         }
     },
     mutations: {

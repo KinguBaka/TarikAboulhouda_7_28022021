@@ -25,6 +25,7 @@ exports.router = ( function() {
 
     // Comments routes
     apiRouter.route('/messages/:idMessage/comment/new').post(commentCtrl.createComment);
+    apiRouter.route('/comment/').get(commentCtrl.listAllComment);
     apiRouter.route('/messages/:idMessage/comment/').get(commentCtrl.listComment);
     apiRouter.route('/messages/:idMessage/comment/:idComment').put(commentCtrl.modifComment);
     apiRouter.route('/messages/:idMessage/comment/:idComment').delete(commentCtrl.deleteComment);
