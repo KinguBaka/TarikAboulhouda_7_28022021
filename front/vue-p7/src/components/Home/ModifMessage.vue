@@ -32,25 +32,6 @@
         },
         methods : {
             async updateMessage(id) {
-                
-                /*let title = this.modifTitle
-                let content = this.modifContent
-                let attachement = this.modifAttachement
-               
-                let body = {}
-                const data = {
-                    title,
-                    content, 
-                    attachement
-                }
-
-                const newData = Object.keys(data).filter(key =>
-                    data[key] != null
-                )
-
-                for (let newValue of newData) {
-                    body[newValue] = data[newValue]
-                }*/
 
                 let body = new FormData();
                 body.append('title', this.modifTitle);

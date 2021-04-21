@@ -133,7 +133,7 @@ module.exports = {
             if(userFound) {
                 models.Message.findOne({where : {id : req.params.id }})
                 .then(message =>{
-                    if (message.attachement) {
+                    if (req.attachement) {
                         const filename = message.attachement.split("/images/")[1];
                         fs.unlink(`public/images/${filename}`, () =>
                             console.log("Image supprimée")

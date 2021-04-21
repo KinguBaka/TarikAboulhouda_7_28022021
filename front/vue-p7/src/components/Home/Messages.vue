@@ -13,9 +13,10 @@
                 <button v-if="message.UserId === user.id" class="btn btn-danger" @click.prevent="deleteMessage(message.id)">Supprimer</button>
                 <button v-if="message.UserId === user.id" class="btn btn-primary" @click.prevent="modifMessage(message.id)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBackdrop" aria-controls="offcanvasWithBackdrop">Modifier</button>
             </div>
-            <Comments :idMessage="message.id" :idUser="user.id" />
+            <Comments :idMessage="message.id" :idUser="user.id" @modif-Comment="test" />
         </div>
         <ModifMessage :messageId="this.modifMessageId" />
+        <ModifComment :idMessageModif="this.idModifCommentMessage" :idComment="this.idModifComment" />
     </div>
 </template>
 
@@ -27,12 +28,15 @@
     import LikeMessage from './LikeMessage'
     import ModifMessage from './ModifMessage'
     import Comments from './Comments'
+    import ModifComment from './ModifComment'
 
     export default {
         name: 'Messages',
         data(){
             return {
-                modifMessageId: 0
+                modifMessageId: 0,
+                idModifComment:0,
+                idModifCommentMessage: 0
             }
         },
         computed: {
@@ -52,6 +56,10 @@
             },
             modifMessage(id) {
                 this.modifMessageId = id
+            },
+            test(payload) {
+                this.idModifComment = payload.idComment
+                this.idModifCommentMessage = payload.idMessage
             }
         },
         mounted : function() {
@@ -61,7 +69,8 @@
             CreateMessage,
             LikeMessage,
             ModifMessage,
-            Comments
+            Comments,
+            ModifComment
         }
     }
 </script>

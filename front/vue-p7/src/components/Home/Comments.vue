@@ -1,15 +1,16 @@
 <template>
     <div id="comments">
-        <div v-for="comment of comments" :key="comment.id" class="card">
-            <div v-if="comment.MessageId === idMessage" :id="'comment'+comment.id">
+        <div v-for="comment of comments" :key="comment.id" >
+            <div v-if="comment.MessageId === idMessage" :id="'comment'+comment.id" class="card">
                 <h3> {{comment.User.username}} </h3>
+                <p> {{comment.id}} </p>
                 <p> {{comment.content}} </p>
                 <p> {{format_date(comment.createdAt)}} </p>
                 <button v-if="comment.UserId === idUser" class="btn btn-danger" @click.prevent="deleteComment(idMessage, comment.id)">Supprimer</button>
-                <button v-if="comment.UserId === idUser" class="btn btn-primary" @click.prevent="modifMessage(message.id)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBackdrop" aria-controls="offcanvasWithBackdrop">Modifier</button>
+                <button v-if="comment.UserId === idUser" class="btn btn-primary" @click.prevent="modifComment(comment.id, idMessage)" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBackdrop2" aria-controls="offcanvasWithBackdrop2">Modifier</button>
             </div>
         </div>
-        <CreateComment :idMessage = idMessage />
+        <CreateComment :idMessage="idMessage" />
     </div>
 </template>
 
@@ -21,6 +22,11 @@
 
     export default {
         name: 'Comments',
+        data() {
+            return {
+                modifCommentId: 0
+            }
+        },
         props:{
             idMessage: Number,
             idUser: Number
@@ -37,6 +43,14 @@
             async deleteComment(idMessage, idComment) {
                 await axios.delete(`/messages/${idMessage}/comment/${idComment}`)
                 window.location.reload();
+            },
+            modifComment(idComment, idMessage) {
+                this.modifCommentId = idComment
+                
+                this.$emit('modif-Comment', {
+                    idComment : this.modifCommentId,
+                    idMessage : idMessage
+                })
             }
         },
         mounted : function() {
