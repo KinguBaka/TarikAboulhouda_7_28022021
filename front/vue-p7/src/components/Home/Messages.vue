@@ -76,6 +76,12 @@
 </script>
 
 <style>
+    #messages {
+        width: 70%;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
     textarea {
         width: 50%;
     }

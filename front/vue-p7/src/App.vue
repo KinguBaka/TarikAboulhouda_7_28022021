@@ -1,8 +1,7 @@
 <template>
   <div id="app">
     <Navbar/>
-    <div>
-
+    <div id="app2">
       <router-view/>
     </div>
   </div>
@@ -26,5 +25,9 @@
 </script>
 
 <style>
-
+    #app2{
+        margin :0;
+        padding: 0;
+        height: 100%;
+    }
 </style>

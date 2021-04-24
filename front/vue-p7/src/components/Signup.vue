@@ -1,17 +1,16 @@
 <template>
-    <div>
-        <form class="signup" @submit.prevent="signup">
+    <div id="signup">
+        <form  @submit.prevent="signup">
             <h2>S'inscrire</h2>
             <label>Email</label>
-            <input required v-model="email" type="text" placeholder="email@email.com"/>
-            <label>Password</label>
-            <input required v-model="password" type="password" placeholder="Password"/>
+            <input class="form-control" required v-model="email" type="text" placeholder="email@email.com"/>
+            <label>Mot de passe</label>
+            <input class="form-control" required v-model="password" type="password" placeholder="Password"/>
             <label>Username</label>
-            <input required v-model="username" type="text" placeholder="toto"/>
+            <input class="form-control" required v-model="username" type="text" placeholder="toto"/>
             <label for="bio">Bio</label>
-            <input v-model="bio" type="text" placeholder="Présentez-vous">
-            <hr />
-            <button type="submit">s'inscrire</button>
+            <textarea class="form-control" rows="5" v-model="bio" type="text" placeholder="Présentez-vous"></textarea>
+            <button class="btn btn-primary" type="submit">S'inscrire</button>
         </form>
     </div>
 </template>
@@ -47,5 +46,23 @@
 </script>
 
 <style>
+    #signup {
+        margin : 10% auto 10% auto;
+        width: 70%;
+        text-align: center;
+        vertical-align: middle;
+        border: grey 1px solid ;
+        border-radius: 20px;
+        box-shadow: 10px 10px 30px grey ;
+        padding: 15px;
+    }
 
+    #signup button {
+        margin: 10px;
+    }
+
+    #signup label {
+        font-size:  2vw;
+        margin-top: 15px;
+    }
 </style>

@@ -1,8 +1,9 @@
 <template>
-    <div>
-        <div v-if="!user">
-            <h1>Hello</h1>
-            <h3>Vous n'êtes pas connecté !</h3>
+    <div id="home">
+        <div v-if="!user" id="notLogin">
+            <h1>Bienvenue chez Groupomania</h1>
+            <h4>Vous n'êtes pas connecté !</h4>
+            <p> <strong> Connectez-vous ou créez un compte pour échanger avec vos collégues ! </strong> </p>
         </div>
         <Messages />
     </div>
@@ -26,10 +27,30 @@
 
 <style>
     h1 {
-        font-size: 100px;
-        text-align: center;
+        font-size: 8vw;
     }
-    button {
-        width: 100px;
+    #home {
+        margin-left: auto;
+        margin-right: auto;
+        height: 100%;
+    }
+    #notLogin {
+        text-align: center;
+        height: 100%;
+        padding: 100px;
+        background-image: url("../../assets/pexels-sevenstorm-juhaszimrus-443383v2.jpg");
+        background-repeat:no-repeat;
+        background-size: cover;
+    }
+    #notLogin h4 {
+        margin: 50px;
+    }
+    html, body{
+        margin :0;
+        padding: 0;
+        height: 100%;
+    }
+    #app {
+        height: 100%;
     }
 </style>

@@ -1,8 +1,8 @@
 <template>
     <div id="createMessage">
-        <input require v-model="title" placeholder="Votre titre !"/>
-        <textarea require v-model="content" class="form-control" placeholder="Que voulez-vous dire?"></textarea>
-        <input type="file" id="file" ref="file" accept="image/png, image/jpeg" @change="handleFileUpload()">
+        <input class="form-control" require v-model="title" placeholder="Votre titre !"/>
+        <textarea require rows="5" v-model="content" class="form-control" placeholder="Que voulez-vous dire?"></textarea>
+        <input class="form-control" type="file" id="file" ref="file" accept="image/png, image/jpeg" @change="handleFileUpload()">
         <button  @click.prevent="createMessage" class="btn btn-primary">Publier</button>
     </div>
 </template>
@@ -37,5 +37,11 @@
 </script>
 
 <style>
-
+    #createMessage {
+        margin: 40px 0 40px 0;
+        padding: 15px 0 15px 0;
+        background-color: rgb(214, 214, 214);
+        border-radius: 20px;
+        border: rgb(189, 189, 189) 1px solid ;
+    }
 </style>
