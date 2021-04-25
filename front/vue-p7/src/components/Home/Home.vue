@@ -26,9 +26,6 @@
 
 
 <style>
-    h1 {
-        font-size: 8vw;
-    }
     #home {
         margin-left: auto;
         margin-right: auto;

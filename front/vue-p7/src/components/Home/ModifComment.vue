@@ -6,7 +6,7 @@
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
-                <textarea require v-model="modifComment" class="form-control" placeholder="Que voulez-vous dire?"></textarea>
+                <textarea require v-model="modifComment" rows="8" class="form-control" placeholder="Que voulez-vous dire?"></textarea>
                 <button  @click.prevent="updateComment(idMessageModif, idComment)" class="btn btn-primary">Modifier</button>
             </div>
         </div>
@@ -40,5 +40,8 @@
 </script>
 
 <style>
-
+    .form-control {
+        width: 100%;
+        margin: 0 0 15px 0;
+    }
 </style>

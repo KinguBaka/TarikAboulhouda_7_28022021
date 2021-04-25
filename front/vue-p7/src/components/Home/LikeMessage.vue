@@ -1,7 +1,7 @@
 <template>
     <div id="LikeMessage">
-        <button v-if="messageUsersLiked.includes(userId)" @click.prevent="dislikeMessage(messageId)">Je n'aime plus !</button>
-        <button v-else @click.prevent="likeMessage(messageId)">J'aime !</button>
+        <i class="like fas fa-thumbs-down" v-if="messageUsersLiked.includes(userId)" @click.prevent="dislikeMessage(messageId)"></i>
+        <i class="like fas fa-thumbs-up" v-else @click.prevent="likeMessage(messageId)"></i>
     </div>
 </template>
 
@@ -33,5 +33,11 @@
 </script>
 
 <style>
-
+    .like {
+        color: #0D6EFD;
+        font-size: 2vw;
+    }
+    .like:hover {
+        cursor: pointer;
+    }
 </style>

@@ -25,9 +25,22 @@
 </script>
 
 <style>
+    html {
+       background-color: rgb(209, 209, 209);
+    }
+    #app {
+      background-color: rgb(209, 209, 209);
+      height: 100%;
+    }
     #app2{
-        margin :0;
-        padding: 0;
-        height: 100%;
+      margin :0;
+      padding: 0;
+      height: 100%;
+    }
+    h1 {
+      font-size: 5vw;
+    }
+    h4 {
+      font-size: 2vw;
     }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
       <router-link class="navbar-brand"  to="/">
         <img src="../assets/icon-left-font-monochrome-white.svg" id="icone" alt="">
@@ -52,7 +52,6 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
   #navbarNavAltMarkup {
     justify-content: flex-end;
   }

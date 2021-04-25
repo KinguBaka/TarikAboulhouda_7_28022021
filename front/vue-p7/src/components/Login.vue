@@ -56,7 +56,7 @@
         font-size:  2vw;
         margin-top: 15px;
     }
-    .form-control {
+    #login .form-control {
         margin: 5px auto 10px auto;
         width: 40%;
     }

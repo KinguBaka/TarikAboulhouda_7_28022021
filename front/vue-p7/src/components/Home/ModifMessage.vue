@@ -6,9 +6,9 @@
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
-                <input require v-model="modifTitle" placeholder="Votre titre !"/>
-                <textarea require v-model="modifContent" class="form-control" placeholder="Que voulez-vous dire?"></textarea>
-                <input type="file" id="modiffile" ref="modifFile" accept="image/png, image/jpeg" @change="modifFileUpload()">
+                <input class="form-control" require v-model="modifTitle" placeholder="Votre titre !"/>
+                <textarea  rows="6" require v-model="modifContent" class="form-control" placeholder="Que voulez-vous dire?"></textarea>
+                <input class="form-control" type="file" id="modiffile" ref="modifFile" accept="image/png, image/jpeg" @change="modifFileUpload()">
                 <button  @click.prevent="updateMessage(messageId)" class="btn btn-primary">Modifier</button>
             </div>
         </div>
