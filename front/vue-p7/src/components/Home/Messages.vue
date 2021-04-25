@@ -3,11 +3,11 @@
         <CreateMessage />
         <div v-for="message of messages" :key="message.id" class="card message">
             <div :id="message.id" class="oneMessage">
-                <div v-if="message.UserId === user.id" class="dropdown">
+                <div v-if="message.UserId === user.id || user.isAdmin == true" class="dropdown">
                     <i class="fas fa-edit edit" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                         <li>
-                            <button v-if="message.UserId === user.id" class="btn btn-danger" @click.prevent="deleteMessage(message.id)">Supprimer</button>
+                            <button v-if="message.UserId === user.id || user.isAdmin === true" class="btn btn-danger" @click.prevent="deleteMessage(message.id)">Supprimer</button>
                         </li>
                         <li>
                             <button v-if="message.UserId === user.id" class="btn btn-primary" @click.prevent="modifMessage(message.id)" data-bs-toggle="offcanvas" 
@@ -23,7 +23,7 @@
                 <LikeMessage :messageId="message.id" :messageUsersLiked="message.usersLiked" :userId="user.id" />
                 <p class="date"> {{format_date(message.createdAt)}} </p>
             </div>
-            <Comments :idMessage="message.id" :idUser="user.id" @modif-Comment="test" />
+            <Comments :idMessage="message.id" :idUser="user.id" @modif-Comment="test" :userIsAdmin="user.isAdmin" />
         </div>
         <ModifMessage :messageId="this.modifMessageId" />
         <ModifComment :idMessageModif="this.idModifCommentMessage" :idComment="this.idModifComment" />

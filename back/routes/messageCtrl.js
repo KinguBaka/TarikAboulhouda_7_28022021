@@ -169,6 +169,7 @@ module.exports = {
         var headerAuth = req.headers['authorization'];
         var userId = jwtUtils.getUserId(headerAuth);
         var userIsAdmin = jwtUtils.UserIsAdmin(headerAuth);
+        console.log(userIsAdmin)
         
         models.Message.findOne({where : {id : req.params.id }})
         .then(message => {

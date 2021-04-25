@@ -2,11 +2,11 @@
     <div id="comments">
         <div v-for="comment of comments" :key="comment.id" >
             <div v-if="comment.MessageId === idMessage" :id="'comment'+comment.id" class="oneComment">
-                <div class="dropdown">
+                <div class="dropdown" v-if="comment.UserId === idUser || userIsAdmin === true">
                     <i class="fas fa-edit edit" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></i>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                         <li>
-                            <button v-if="comment.UserId === idUser" class="btn btn-danger" @click.prevent="deleteComment(idMessage, comment.id)">Supprimer</button>
+                            <button v-if="comment.UserId === idUser || userIsAdmin === true" class="btn btn-danger" @click.prevent="deleteComment(idMessage, comment.id)">Supprimer</button>
                         </li>
                         <li>
                             <button v-if="comment.UserId === idUser" class="btn btn-primary" @click.prevent="modifComment(comment.id, idMessage)" data-bs-toggle="offcanvas" 
@@ -40,7 +40,8 @@
         },
         props:{
             idMessage: Number,
-            idUser: Number
+            idUser: Number,
+            userIsAdmin: Boolean
         },
         computed : {
             ...mapGetters(['comments'])

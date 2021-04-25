@@ -120,7 +120,7 @@ module.exports = {
         }
         
         models.User.findOne({
-            attributes: ['id', 'email', 'username', 'bio'],
+            attributes: ['id', 'email', 'username', 'bio', 'isAdmin'],
             where: { id: userId }
         }).then(user => {
             if (user) {
