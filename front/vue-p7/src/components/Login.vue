@@ -1,6 +1,6 @@
 <template>
     <div id="login">
-        <form @submit.prevent="login">
+<form @submit.prevent="login">
             <h2>Se connecter</h2>
             <label>Email</label> 
             <br>
@@ -28,14 +28,18 @@
         },
         methods : {
             async login() {
-                const response = await axios.post('/users/login', {
+                await axios.post('/users/login', {
                     email: this.email,
                     password: this.password
                 })
-                localStorage.setItem('token', response.data.token);
-                this.$store.dispatch('user', response.data.user);
-                this.$router.push('/');
-                window.location.reload();
+                .then((response) => {
+                    localStorage.setItem('token', response.data.token)
+                    })
+                .then( async () => {
+                    const response2 = await axios.get('users/me')
+                    this.$store.dispatch('user', response2.data)
+                    this.$router.push('/');
+                })
             }
         }
     };
@@ -51,6 +55,8 @@
         border-radius: 20px;
         box-shadow: 10px 10px 30px grey ;
         padding: 15px;
+        background-color:rgb(33,37,41);
+        color: whitesmoke;
     }
     #login label {
         font-size:  2vw;
